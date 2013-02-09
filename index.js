@@ -1,11 +1,16 @@
-var express = require('express');
+var express = require('express'),
+    five = require('johnny-five');
 
+var board = new five.Board();
 var app = express();
 
 app.get('/', function(request, response){
     response.send('hello world');
 });
 
-
-app.listen(3000);
-console.log('Listening on 3000');
+board.on('ready', function(){
+    app.listen(3000);
+    console.log('Listening on 3000');
+    var ledPin = new five.Led(13);
+    ledPin.strobe();
+});
