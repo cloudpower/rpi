@@ -4,25 +4,8 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-    <button id="onoff_button">turn on</button>
-    <script type="text/javascript">
-        var state = 'off'; 
-        $("#onoff_button").click(function(){
-            if(state == 'on'){
-                state = 'off';
-                $("#onoff_button").text('turn on');
-                $.get('/api/v1/off', function(data){
-                    console.log(data);
-                });
-            }
-            else if(state=='off'){
-                state = 'on';
-                $("#onoff_button").text('turn off');
-                $.get('/api/v1/on', function(data){
-                    console.log(data);
-                });
-            }
-        });
+    <button id="state-button">turn on</button>
+    <script type="text/javascript" src="/static/js/main.js">
     </script>
 </body>
 </html>

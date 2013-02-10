@@ -5,8 +5,10 @@ var express = require('express'),
 var board = new five.Board();
 var app = express();
 
+app.use("/static", express.static(__dirname + '/static'));
+app.use(express.bodyParser());
+
 app.get('/', function(req, res){
-    //response.send('hello world');
     fs.readFile(__dirname + '/static/templates/index.html', 'UTF-8', function(err, data){
         res.send(data);
     });
@@ -30,6 +32,4 @@ board.on('ready', function(){
     app.listen(3000);
     console.log('Listening on 3000');
     board.digitalWrite(13, 0);
-    //var ledPin = new five.Led(13);
-    //ledPin.strobe();
 });
