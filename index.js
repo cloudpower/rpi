@@ -1,35 +1,49 @@
 var express = require('express'),
     five = require('johnny-five'),
-    fs = require('fs');
+    fs = require('fs'),
+    remote = require('./lib/remote').create();
 
-var board = new five.Board();
-var app = express();
+var arduino = new five.Board(),
+    app = express(),
+    online = false;
 
+// this will be the address of the remote API server
+// use localhost for testing
+// attempt to connect to the remote API server
+remote.connect('ws://localhost:3001');
+remote.on('connect', function(){
+    online = true;
+});
+
+// set up the Express static file serving
+// @todo replace with nginx for this stuff
 app.use("/static", express.static(__dirname + '/static'));
 app.use(express.bodyParser());
 
+// the main web application route
 app.get('/', function(req, res){
     fs.readFile(__dirname + '/static/templates/index.html', 'UTF-8', function(err, data){
         res.send(data);
     });
 });
 
-// API Routes
+// API routes
+// these will be called by the main web application
 
 app.get('/api/v1/on', function(req, res){
-    board.digitalWrite(13, 1); 
+    arduino.digitalWrite(13, 1); 
     console.log('turning LED on...');
     res.send('LED on');
 });
 
 app.get('/api/v1/off', function(req, res){
-    board.digitalWrite(13, 0);
+    arduino.digitalWrite(13, 0);
     console.log('turning LED off...');
     res.send('LED off');
 });
 
-board.on('ready', function(){
+arduino.on('ready', function(){
     app.listen(3000);
     console.log('Listening on 3000');
-    board.digitalWrite(13, 0);
+    arduino.digitalWrite(13, 0);
 });

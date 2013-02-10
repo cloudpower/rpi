@@ -10,6 +10,7 @@
     "superagent": "0.10.0",
     "leveldb": "0.7.1",
     "socket.io": "0.9.13",
+    "socket.io-client": "0.9.11",
     "johnny-five": "0.5.14"
   },
   "scripts": {
