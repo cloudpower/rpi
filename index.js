@@ -10,8 +10,8 @@ var arduino = new five.Board(),
 // this will be the address of the remote API server
 // use localhost for testing
 // attempt to connect to the remote API server
-remote.connect('ws://localhost:3001');
 remote.on('connect', function(){
+    console.log('online event');
     online = true;
 });
 
@@ -43,6 +43,7 @@ app.get('/api/v1/off', function(req, res){
 });
 
 arduino.on('ready', function(){
+    remote.connect('ws://localhost:3001');
     app.listen(3000);
     console.log('Listening on 3000');
     arduino.digitalWrite(13, 0);
