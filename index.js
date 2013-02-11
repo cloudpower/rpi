@@ -6,7 +6,8 @@ var express = require('express'),
 var arduino = new five.Board(),
     app = express(),
     online = false,
-    apiUrl = 'cloudpower.drewbharris.com';
+    apiUrl = 'cloudpower.drewbharris.com',
+    clientId = 'myClient';
 
 // this will be the address of the remote API server
 // use localhost for testing
@@ -44,7 +45,7 @@ app.get('/api/v1/off', function(req, res){
 });
 
 arduino.on('ready', function(){
-    remote.connectPersistent('ws://' + apiUrl);
+    remote.connectPersistent(clientId, 'ws://' + apiUrl);
     app.listen(3000);
     console.log('Listening on 3000');
     arduino.digitalWrite(13, 0);
