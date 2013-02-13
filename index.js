@@ -1,21 +1,12 @@
 var express = require('express'),
     five = require('johnny-five'),
     fs = require('fs'),
-    remote = require('./lib/remote').create();
+    powerbar = require('./lib/powerbar').create();
 
-var arduino = new five.Board(),
-    app = express(),
+var app = express(),
     online = false,
     apiUrl = 'cloudpower.drewbharris.com',
-    clientId = 'myClient';
-
-// this will be the address of the remote API server
-// use localhost for testing
-// attempt to connect to the remote API server
-remote.on('connect', function(){
-    console.log('online event');
-    online = true;
-});
+    deviceId = 'myDevice';
 
 // set up the Express static file serving
 // @todo replace with nginx for this stuff
@@ -33,20 +24,28 @@ app.get('/', function(req, res){
 // these will be called by the main web application
 
 app.get('/api/v1/on', function(req, res){
-    arduino.digitalWrite(13, 1); 
+    powerbar.arduino.digitalWrite(13, 1); 
     console.log('turning LED on...');
     res.send('LED on');
 });
 
 app.get('/api/v1/off', function(req, res){
-    arduino.digitalWrite(13, 0);
+    powerbar.arduino.digitalWrite(13, 0);
     console.log('turning LED off...');
     res.send('LED off');
 });
 
-arduino.on('ready', function(){
-    remote.connectPersistent(clientId, 'ws://' + apiUrl);
+// this will be the address of the remote API server
+// use localhost for testing
+// attempt to connect to the remote API server
+powerbar.on('remote-connect', function(){
+    console.log('online event');
+    online = true;
+});
+
+powerbar.on('ready', function(){
+    powerbar.connectPersistent(deviceId, 'ws://' + apiUrl);
     app.listen(3000);
     console.log('Listening on 3000');
-    arduino.digitalWrite(13, 0);
+    powerbar.arduino.digitalWrite(13, 0);
 });
