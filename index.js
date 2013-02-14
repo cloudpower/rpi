@@ -3,12 +3,13 @@
 var express = require('express'),
     five = require('johnny-five'),
     fs = require('fs'),
-    powerbar = require('./lib/powerbar').create();
+    pb = require('./lib/powerbar');
 
 var app = express(),
     online = false,
     apiUrl = 'cloudpower.drewbharris.com',
-    deviceId = 'myDevice';
+    deviceId = 'myDevice',
+    powerbar;
 
 // set up the Express static file serving
 // @todo replace with nginx for this stuff
@@ -37,6 +38,8 @@ app.get('/api/v1/off', function(req, res){
     res.send('LED off');
 });
 
+powerbar = pb.create();
+
 // this will be the address of the remote API server
 // use localhost for testing
 // attempt to connect to the remote API server
@@ -46,8 +49,11 @@ powerbar.on('remote-connect', function(){
 });
 
 powerbar.on('ready', function(){
+    console.log('got ready');
     powerbar.connectPersistent(deviceId, 'ws://' + apiUrl);
     app.listen(3000);
     console.log('Listening on 3000');
     powerbar.arduino.digitalWrite(13, 0);
 });
+
+
