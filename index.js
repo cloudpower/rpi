@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express'),
     five = require('johnny-five'),
     fs = require('fs'),
@@ -24,7 +26,7 @@ app.get('/', function(req, res){
 // these will be called by the main web application
 
 app.get('/api/v1/on', function(req, res){
-    powerbar.arduino.digitalWrite(13, 1); 
+    powerbar.arduino.digitalWrite(13, 1);
     console.log('turning LED on...');
     res.send('LED on');
 });
