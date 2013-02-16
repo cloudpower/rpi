@@ -1,7 +1,6 @@
 "use strict";
 
 var express = require('express'),
-    five = require('johnny-five'),
     fs = require('fs'),
     pb = require('./lib/powerbar'),
     dirty = require('dirty'),
