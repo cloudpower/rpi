@@ -50,10 +50,11 @@ config.on('load', function(){
     // as a new device
     deviceId = config.get('device_id');
     if (deviceId === undefined){
+        deviceId = 'device-' + new Date().getTime();
         // wait for QR decoding
         console.log('stuff');
     }
-
+    console.log(deviceId);
     powerbar = pb.create();
 
     // this will be the address of the remote API server
