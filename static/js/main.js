@@ -13,7 +13,7 @@ $("#state-button").click(function(){
     if(state === 'on'){
         state = 'off';
         $("#state-button").text('turn on');
-        $.post('/api/v1/outlet/13', {
+        $.post('/api/v1/outlet/3', {
             'state': 0
         }, function(data){
             console.log(data);
@@ -22,7 +22,7 @@ $("#state-button").click(function(){
     else if(state === 'off'){
         state = 'on';
         $("#state-button").text('turn off');
-        $.post('/api/v1/outlet/13', {
+        $.post('/api/v1/outlet/3', {
             'state': 1
         }, function(data){
             console.log(data);

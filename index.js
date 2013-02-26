@@ -35,7 +35,17 @@ app.post('/api/v1/outlet/:outlet', function(req, res){
     var outlet = parseInt(req.params.outlet, 10),
         state = parseInt(req.body.state, 10);
     powerbar.arduino.digitalWrite(outlet, state);
+    powerbar.outletStates[outlet] = state;
     console.log('setting state of ' + outlet + ' to ' + state);
+    res.send({
+        'outlet': outlet,
+        'state': state
+    });
+});
+
+app.get('/api/v1/outlet/:outlet', function(req, res){
+    var outlet = parseInt(req.params.outlet, 10),
+        state = powerbar.outletStates[outlet];
     res.send({
         'outlet': outlet,
         'state': state
@@ -55,7 +65,7 @@ config.on('load', function(){
     // as a new device
     deviceId = config.get('device_id');
     if (deviceId === undefined){
-        deviceId = 'device-' + new Date().getTime();
+        deviceId = 'device-0';
         // wait for QR decoding
     }
     console.log(deviceId);
@@ -75,6 +85,3 @@ config.on('load', function(){
         powerbar.arduino.digitalWrite(13, 0);
     });
 });
-
-
-
