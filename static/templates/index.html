@@ -1,12 +1,25 @@
 <html>
 <head>
-    <title>RPi Web Server</title>
+    <title>Cloudpower</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
 </head>
 <body>
-    <button id="state-button">turn on</button>
-    <script type="text/javascript" src="/static/js/main.js">
-    </script>
+	<div id="header">
+		Cloudpower Local v1
+	</div>
+	<div>
+		status:
+		<div id="online-status">
+			offline
+		</div>
+	</div>
+	<div>
+	    pin 13: <button id="state-button">turn on</button>
+	    <script type="text/javascript" src="/static/js/main.js">
+	    </script>
+	</div>
 </body>
 </html>
 

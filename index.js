@@ -31,16 +31,21 @@ app.get('/', function(req, res){
 // API routes
 // these will be called by the main web application
 
-app.get('/api/v1/on', function(req, res){
-    powerbar.arduino.digitalWrite(13, 1);
-    console.log('turning LED on...');
-    res.send('LED on');
+app.post('/api/v1/outlet/:outlet', function(req, res){
+    var outlet = parseInt(req.params.outlet, 10),
+        state = parseInt(req.body.state, 10);
+    powerbar.arduino.digitalWrite(outlet, state);
+    console.log('setting state of ' + outlet + ' to ' + state);
+    res.send({
+        'outlet': outlet,
+        'state': state
+    });
 });
 
-app.get('/api/v1/off', function(req, res){
-    powerbar.arduino.digitalWrite(13, 0);
-    console.log('turning LED off...');
-    res.send('LED off');
+app.get('/api/v1/online', function(req, res){
+    res.send({
+        'online': online
+    });
 });
 
 config.on('load', function(){
