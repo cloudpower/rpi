@@ -57,7 +57,6 @@ config.on('load', function(){
     if (deviceId === undefined){
         deviceId = 'device-' + new Date().getTime();
         // wait for QR decoding
-        console.log('stuff');
     }
     console.log(deviceId);
     powerbar = pb.create();
@@ -66,7 +65,6 @@ config.on('load', function(){
     // use localhost for testing
     // attempt to connect to the remote API server
     powerbar.on('remote-connect', function(){
-        console.log('online event');
         online = true;
     });
 
