@@ -11,7 +11,7 @@
     "leveldb": "0.7.1",
     "socket.io": "0.9.13",
     "socket.io-client": "0.9.11",
-    "johnny-five": "0.5.14",
+    "serialport": "1.0.8",
     "dirty": "0.9.6"
   },
   "scripts": {

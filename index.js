@@ -30,33 +30,34 @@ app.get('/', function(req, res){
 
 // API routes
 // these will be called by the main web application
+//
 
-app.post('/api/v1/outlet/:outlet', function(req, res){
-    var outlet = parseInt(req.params.outlet, 10),
-        state = parseInt(req.body.state, 10);
-    powerbar.arduino.digitalWrite(outlet, state);
-    powerbar.outletStates[outlet] = state;
-    console.log('setting state of ' + outlet + ' to ' + state);
-    res.send({
-        'outlet': outlet,
-        'state': state
-    });
-});
+// app.post('/api/v1/outlet/:outlet', function(req, res){
+//     var outlet = parseInt(req.params.outlet, 10),
+//         state = parseInt(req.body.state, 10);
+//     powerbar.arduino.digitalWrite(outlet, state);
+//     powerbar.outletStates[outlet] = state;
+//     console.log('setting state of ' + outlet + ' to ' + state);
+//     res.send({
+//         'outlet': outlet,
+//         'state': state
+//     });
+// });
 
-app.get('/api/v1/outlet/:outlet', function(req, res){
-    var outlet = parseInt(req.params.outlet, 10),
-        state = powerbar.outletStates[outlet];
-    res.send({
-        'outlet': outlet,
-        'state': state
-    });
-});
+// app.get('/api/v1/outlet/:outlet', function(req, res){
+//     var outlet = parseInt(req.params.outlet, 10),
+//         state = powerbar.outletStates[outlet];
+//     res.send({
+//         'outlet': outlet,
+//         'state': state
+//     });
+// });
 
-app.get('/api/v1/online', function(req, res){
-    res.send({
-        'online': online
-    });
-});
+// app.get('/api/v1/online', function(req, res){
+//     res.send({
+//         'online': online
+//     });
+// });
 
 config.on('load', function(){
 
@@ -82,6 +83,5 @@ config.on('load', function(){
         powerbar.connectPersistent(deviceId, 'ws://' + apiUrl);
         app.listen(3000);
         console.log('Listening on 3000');
-        powerbar.arduino.digitalWrite(13, 0);
     });
 });
