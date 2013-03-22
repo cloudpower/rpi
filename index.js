@@ -28,36 +28,40 @@ app.get('/', function(req, res){
     });
 });
 
-// API routes
-// these will be called by the main web application
+// Test API routes
 //
 
-// app.post('/api/v1/outlet/:outlet', function(req, res){
-//     var outlet = parseInt(req.params.outlet, 10),
-//         state = parseInt(req.body.state, 10);
-//     powerbar.arduino.digitalWrite(outlet, state);
-//     powerbar.outletStates[outlet] = state;
-//     console.log('setting state of ' + outlet + ' to ' + state);
-//     res.send({
-//         'outlet': outlet,
-//         'state': state
-//     });
-// });
+// set state
+app.get('/api/v1/outlet/:outlet/:state', function(req, res){
+    var outlet = parseInt(req.params.outlet, 10),
+        state = parseInt(req.params.state, 10);
+    powerbar.setOutletState(outlet, state);
+    powerbar.outletStates[outlet] = state;
+    console.log('setting state of ' + outlet + ' to ' + state);
+    res.send({
+        'outlet': outlet,
+        'state': state
+    });
+});
 
-// app.get('/api/v1/outlet/:outlet', function(req, res){
-//     var outlet = parseInt(req.params.outlet, 10),
-//         state = powerbar.outletStates[outlet];
-//     res.send({
-//         'outlet': outlet,
-//         'state': state
-//     });
-// });
+// get state
+app.get('/api/v1/outlet/:outlet', function(req, res){
+    var outlet = parseInt(req.params.outlet, 10),
+        state = powerbar.getOutletState(outlet);
+    res.send({
+        'outlet': outlet,
+        'state': state
+    });
+});
 
-// app.get('/api/v1/online', function(req, res){
-//     res.send({
-//         'online': online
-//     });
-// });
+// get usage values
+app.get('/api/v1/usage', function(req, res){
+    this.getUsageValues().then(function(values){
+        res.send(values);
+    }, function(err){
+        res.send(err);
+    });
+});
 
 config.on('load', function(){
 
@@ -69,7 +73,7 @@ config.on('load', function(){
         deviceId = 'device-0';
         // wait for QR decoding
     }
-    console.log(deviceId);
+    console.log('device id: ' + deviceId);
     powerbar = pb.create();
 
     // this will be the address of the remote API server

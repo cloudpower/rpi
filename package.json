@@ -8,10 +8,9 @@
     "when": "1.5.1",
     "sequence": "2.2.1",
     "superagent": "0.10.0",
-    "leveldb": "0.7.1",
     "socket.io": "0.9.13",
     "socket.io-client": "0.9.11",
-    "serialport": "1.0.8",
+    "serialport": "1.1.0",
     "dirty": "0.9.6"
   },
   "scripts": {
