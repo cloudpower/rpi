@@ -10,6 +10,7 @@ var app = express(),
     online = false,
     apiUrl = 'cloudpower.drewbharris.com',
     deviceId = 'myDevice',
+    serialPort = '/dev/tty0',
     powerbar,
     deviceId;
 
@@ -74,7 +75,7 @@ config.on('load', function(){
         // wait for QR decoding
     }
     console.log('device id: ' + deviceId);
-    powerbar = pb.create();
+    powerbar = pb.create(serialPort);
 
     // this will be the address of the remote API server
     // use localhost for testing
