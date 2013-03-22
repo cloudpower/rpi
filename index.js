@@ -10,7 +10,7 @@ var app = express(),
     online = false,
     apiUrl = 'cloudpower.drewbharris.com',
     deviceId = 'myDevice',
-    serialPort = '/dev/tty0',
+    serialPort = '/dev/tty.usbserial-A600afh6',
     powerbar,
     deviceId;
 
@@ -57,7 +57,7 @@ app.get('/api/v1/outlet/:outlet', function(req, res){
 
 // get usage values
 app.get('/api/v1/usage', function(req, res){
-    this.getUsageValues().then(function(values){
+    powerbar.getUsageValues().then(function(values){
         res.send(values);
     }, function(err){
         res.send(err);
