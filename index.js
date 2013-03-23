@@ -64,6 +64,12 @@ app.get('/api/v1/usage', function(req, res){
     });
 });
 
+// TEST ROUTE: force submission of usage values
+app.get('/api/v1/submitUsage', function(req, res){
+    powerbar.submitUsageData();
+    res.send('done');
+});
+
 config.on('load', function(){
 
     // assign the device id if it exists
@@ -71,7 +77,7 @@ config.on('load', function(){
     // as a new device
     deviceId = config.get('device_id');
     if (deviceId === undefined){
-        deviceId = 'device-0';
+        deviceId = 0;
         // wait for QR decoding
     }
     console.log('device id: ' + deviceId);
