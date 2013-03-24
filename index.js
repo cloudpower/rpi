@@ -8,7 +8,7 @@ var express = require('express'),
 
 var app = express(),
     online = false,
-    apiUrl = 'cloudpower.drewbharris.com',
+    apiUrl = '127.0.0.1:8004',
     deviceId = 'myDevice',
     serialPort = '/dev/tty.usbserial-A600afh6',
     powerbar,
